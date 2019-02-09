@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ugahacks.lifeapp">
+    package="edu.ugahacks.lifeapp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,9 +13,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="edu.ugahacks.lifeapp.SecondActivity"
+            android:name="edu.ugahacks.lifeapp.Act_911"
+            android:label="@string/title_activity_act_911"
+            android:parentActivityName="edu.ugahacks.lifeapp.Act_Trauma"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ugahacks.lifeapp.Act_Trauma" />
+        </activity>
+        <activity
+            android:name="edu.ugahacks.lifeapp.Act_Trauma"
             android:label="@string/title_activity_second"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ugahacks.lifeapp.MainActivity" />
         <activity android:name="edu.ugahacks.lifeapp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
