@@ -1,10 +1,15 @@
 package edu.ugahacks.lifeapp.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -85,6 +90,25 @@ public class Act_Checklist extends AppCompatActivity {
 
             Log.d("sms", alertText);
             // TODO: send SMS to 911 via external method, direct user to instructional GIFs.
+
+            // TODO: deprecate using the notification, maybe?
+            // https://stackoverflow.com/a/47974065
+            String CHANNEL_ID = "lifeapp_1";
+            String name = "lifeapp_1";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            String d = "HandsFreeEmergency primary channel";
+            mChannel.setDescription(d);
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(alertText))
+                    .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                    .setContentTitle("Successful SMS sent by HandsFreeEmergency!");
+
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.createNotificationChannel(mChannel);
+            // notificationID allows you to update the notification later on.
+            mNotificationManager.notify(3908, mBuilder.build());
 
             // TODO: not this.
             // the Intent is to provide survivors with a sense of pride and accomplishment

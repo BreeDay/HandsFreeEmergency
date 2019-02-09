@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             t.addOnSuccessListener(this, o -> {
                 // *should* be a Location.
                 l = (Location) o;
+                Toast.makeText(getApplicationContext(), "Location obtained!", Toast.LENGTH_SHORT).show();
             });
             Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
