@@ -3,17 +3,23 @@ package edu.ugahacks.lifeapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import edu.ugahacks.lifeapp.activities.Act_Trauma;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,45 +28,50 @@ public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     String phone;
     String txtMessage;
+    public static Location l;
+
+    /**
+     * Determines what to do upon the user selecting to allow or deny the necessary permissions.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(getApplicationContext(), "Location denied; exiting application.", Toast.LENGTH_SHORT).show();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main);
 
-        flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
-        // TODO: implement location access for instant reporting
-        if (
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+        } else {
+            flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+            final Task t = flpc.getLastLocation();
+            t.addOnSuccessListener(this, new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    // *should* be a Location.
+                    l = (Location) o;
+                }
+            });
+            Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
-        Task t = flpc.getLastLocation();
 
-
-
-        Button b = findViewById(R.id.call911);
-        b.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.call911).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Act_Trauma.class);
-                startActivity(i);
+                startActivity(new Intent(getApplicationContext(), Act_Trauma.class));
             }
         });
 
     }
+
     protected void smsText() {
         txtMessage = "This is a Test";
         phone = "(650)-555-1212";
@@ -69,15 +80,14 @@ public class MainActivity extends AppCompatActivity {
         messageIntent.setData(Uri.parse(phone));
         messageIntent.putExtra("Message", txtMessage);
         Log.i("Output is : ", txtMessage);
-        if(messageIntent.resolveActivity(getPackageManager()) != null){
+        if (messageIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(messageIntent);
             Log.i("Is there a message?  ", txtMessage);
-        }else{
-            Log.d(TAG,"No message");
+        } else {
+            Log.d(TAG, "No message");
         }
 
     }
-
 
 
 }

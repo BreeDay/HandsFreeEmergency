@@ -4,6 +4,7 @@
     package="edu.ugahacks.lifeapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,23 +13,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.Act_Call911"></activity>
         <activity
-            android:name="edu.ugahacks.lifeapp.Act_911"
+            android:name=".activities.Act_Checklist"
             android:label="@string/title_activity_act_911"
-            android:parentActivityName="edu.ugahacks.lifeapp.Act_Trauma"
+            android:parentActivityName=".activities.Act_Trauma"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.ugahacks.lifeapp.Act_Trauma" />
+                android:value="edu.ugahacks.lifeapp.activities.Act_Trauma" />
         </activity>
         <activity
-            android:name="edu.ugahacks.lifeapp.Act_Trauma"
+            android:name=".activities.Act_Trauma"
             android:label="@string/title_activity_second"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.ugahacks.lifeapp.MainActivity" />
-        <activity android:name="edu.ugahacks.lifeapp.MainActivity">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="edu.ugahacks.lifeapp.MainActivity" />
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
