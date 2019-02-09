@@ -3,9 +3,11 @@ package edu.ugahacks.lifeapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,8 +17,11 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "Error";
     private FusedLocationProviderClient flpc;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    String phone;
+    String txtMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,5 +61,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    protected void smsText() {
+        txtMessage = "This is a Test";
+        phone = "(650)-555-1212";
+
+        Intent messageIntent = new Intent(Intent.ACTION_SENDTO);
+        messageIntent.setData(Uri.parse(phone));
+        messageIntent.putExtra("Message", txtMessage);
+        Log.i("Output is : ", txtMessage);
+        if(messageIntent.resolveActivity(getPackageManager()) != null){
+            startActivity(messageIntent);
+            Log.i("Is there a message?  ", txtMessage);
+        }else{
+            Log.d(TAG,"No message");
+        }
+
+    }
+
+
 
 }
