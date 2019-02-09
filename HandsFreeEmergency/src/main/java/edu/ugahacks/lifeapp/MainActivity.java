@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Hands-Free Emergency");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 

@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import java.math.BigDecimal;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -88,9 +84,11 @@ public class Act_Checklist extends AppCompatActivity {
             alertText += "and was reported at " + DateFormat.getDateTimeInstance().format(new Date()) + ".";
 
             Log.d("sms", alertText);
+            // TODO: send SMS to 911 via external method, direct user to instructional GIFs.
 
+            // TODO: not this.
             // the Intent is to provide survivors with a sense of pride and accomplishment
-            startActivity(new Intent(getApplicationContext(), Act_GIF.class)); // TODO: alert operators of conditions
+            startActivity(new Intent(getApplicationContext(), Act_GIF.class));
         });
     }
 
