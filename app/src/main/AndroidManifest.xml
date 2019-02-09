@@ -4,6 +4,7 @@
     package="edu.ugahacks.lifeapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.Act_Call911"></activity>
+        <activity android:name=".activities.Act_GIF"></activity>
+        <activity android:name=".activities.Act_Call911" />
         <activity
             android:name=".activities.Act_Checklist"
             android:label="@string/title_activity_act_911"
