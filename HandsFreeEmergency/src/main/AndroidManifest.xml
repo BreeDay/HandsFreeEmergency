@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.Act_GIF"></activity>
-        <activity android:name=".activities.Act_Call911" />
+        <activity android:name=".activities.Act_Text911" />
         <activity
             android:name=".activities.Act_Checklist"
             android:label="@string/title_activity_act_911"
@@ -25,11 +25,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ugahacks.lifeapp.activities.Act_Trauma" />
         </activity>
-        <activity
-            android:name=".activities.Act_Trauma"
-            android:label="@string/title_activity_second"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
@@ -42,6 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

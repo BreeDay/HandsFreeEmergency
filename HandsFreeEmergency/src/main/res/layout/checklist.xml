@@ -16,11 +16,6 @@
         app:layout_anchorGravity="bottom|center"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="62dp" />
-
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"

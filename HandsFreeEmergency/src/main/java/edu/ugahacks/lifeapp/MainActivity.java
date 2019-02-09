@@ -16,7 +16,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 
-import edu.ugahacks.lifeapp.activities.Act_Trauma;
+import edu.ugahacks.lifeapp.activities.Act_Checklist;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
 
-        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Trauma.class)));
+        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Checklist.class)));
 
     }
 

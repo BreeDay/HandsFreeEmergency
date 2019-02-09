@@ -5,13 +5,11 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -31,8 +29,6 @@ public class Act_Checklist extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checklist);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         findViewById(R.id.checklistSubmit).setOnClickListener(v -> {
             ApplicationInfo ai = getApplicationContext().getApplicationInfo();
@@ -111,8 +107,8 @@ public class Act_Checklist extends AppCompatActivity {
             mNotificationManager.notify(3908, mBuilder.build());
 
             // TODO: not this.
-            // the Intent is to provide survivors with a sense of pride and accomplishment
-            startActivity(new Intent(getApplicationContext(), Act_GIF.class));
+            // the Intent is to provide survivors with a sense of pride and accomplishment #EAGames #ItsInYourBloodstream
+            startActivity(new Intent(getApplicationContext(), Act_Text911.class));
         });
     }
 

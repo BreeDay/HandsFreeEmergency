@@ -5,11 +5,12 @@ import android.os.Bundle;
 
 import edu.ugahacks.lifeapp.R;
 
-public class Act_Call911 extends AppCompatActivity {
+public class Act_Text911 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.call911);
+        setContentView(R.layout.texting911);
+        setTitle("SMS Confirmation");
     }
 }
