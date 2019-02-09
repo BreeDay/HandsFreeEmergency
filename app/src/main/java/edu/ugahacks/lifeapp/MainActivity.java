@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.ugahacks.lifeapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private c = LocationServices.getFusedLocationProviderClient(this);
+    private FusedLocationProviderClient flpc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +20,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+        // TODO: implement this
+        //        flpc.getLastLocation();
+
+
         Button b = findViewById(R.id.call911);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(this, SecondActivity.class);
+                Intent i = new Intent(getApplicationContext(), SecondActivity.class);
+                startActivity(i);
             }
         });
 
     }
-    //Test to see if git is working
 
 }
