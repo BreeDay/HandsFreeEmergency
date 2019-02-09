@@ -1,4 +1,4 @@
-package com.mstiller7.ugahacks4;
+package edu.ugahacks.lifeapp;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.mstiller7.ugahacks4;
+package edu.ugahacks.lifeapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
