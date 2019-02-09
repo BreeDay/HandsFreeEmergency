@@ -10,13 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import edu.ugahacks.lifeapp.activities.Act_Trauma;
@@ -53,22 +50,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
             final Task t = flpc.getLastLocation();
-            t.addOnSuccessListener(this, new OnSuccessListener() {
-                @Override
-                public void onSuccess(Object o) {
-                    // *should* be a Location.
-                    l = (Location) o;
-                }
+            t.addOnSuccessListener(this, o -> {
+                // *should* be a Location.
+                l = (Location) o;
             });
             Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
 
-        findViewById(R.id.call911).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Act_Trauma.class));
-            }
-        });
+        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Trauma.class)));
 
     }
 

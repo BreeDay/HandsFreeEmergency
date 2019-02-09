@@ -20,20 +20,10 @@ public class Act_Trauma extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // "speak to 911"
-        findViewById(R.id.speak911).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Act_Call911.class));
-            }
-        });
+        findViewById(R.id.speak911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Call911.class)));
 
         // "offer aid"
-        findViewById(R.id.help911).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Act_Checklist.class));
-            }
-        });
+        findViewById(R.id.help911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Checklist.class)));
 
     }
 

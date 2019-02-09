@@ -33,67 +33,64 @@ public class Act_Checklist extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.checklistSubmit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ApplicationInfo ai = getApplicationContext().getApplicationInfo();
-                String appName = ai.labelRes == 0 ? ai.nonLocalizedLabel.toString() : getApplicationContext().getString(ai.labelRes);
-                String alertText = "This is an automated alert message from " + appName + ".";
+        findViewById(R.id.checklistSubmit).setOnClickListener(v -> {
+            ApplicationInfo ai = getApplicationContext().getApplicationInfo();
+            String appName = ai.labelRes == 0 ? ai.nonLocalizedLabel.toString() : getApplicationContext().getString(ai.labelRes);
+            String alertText = "This is an automated alert message from " + appName + ".";
 
-                Location l = MainActivity.l;
-                if (l == null) {
-                    SystemClock.sleep(5000);
-                    Toast.makeText(getApplicationContext(), "Still obtaining location. Please wait a moment.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                double lat = Objects.requireNonNull(l).getLatitude();
-                double lon = Objects.requireNonNull(l).getLongitude();
-
-                alertText += " There is a victim located at (" + lat + ", " + lon + "). The victim is ";
-
-                CheckBox boxIsConscious = findViewById(R.id.boxIsConscious);
-                CheckBox boxIsBleeding = findViewById(R.id.boxIsBleeding);
-                CheckBox boxHasPulse = findViewById(R.id.boxHasPulse);
-                CheckBox boxIsCold = findViewById(R.id.boxIsCold);
-                CheckBox boxIsDecapitated = findViewById(R.id.boxIsDecapitated);
-
-                if (boxIsConscious.isChecked()) {
-                    alertText += "conscious, ";
-                } else {
-                    alertText += "not conscious, ";
-                }
-
-                if (boxIsBleeding.isChecked()) {
-                    alertText += "bleeding, ";
-                } else {
-                    alertText += "not bleeding, ";
-                }
-
-                if (boxHasPulse.isChecked()) {
-                    alertText += "has a pulse, ";
-                } else {
-                    alertText += "has no pulse, ";
-                }
-
-                if (boxIsCold.isChecked()) {
-                    alertText += "is cold to the touch, ";
-                } else {
-                    alertText += "is a normal temperature, ";
-                }
-
-                if (boxIsDecapitated.isChecked()) {
-                    alertText += "has lost their head, ";
-                } else {
-                    alertText += "still has their head on, ";
-                }
-
-                alertText += "and was reported at " + DateFormat.getDateTimeInstance().format(new Date()) + ".";
-
-                Log.d("sms", alertText);
-
-                // the Intent is to provide survivors with a sense of pride and accomplishment
-                startActivity(new Intent(getApplicationContext(), Act_GIF.class)); // TODO: alert operators of conditions
+            Location l = MainActivity.l;
+            if (l == null) {
+                SystemClock.sleep(5000);
+                Toast.makeText(getApplicationContext(), "Still obtaining location. Please wait a moment.", Toast.LENGTH_LONG).show();
+                return;
             }
+            double lat = Objects.requireNonNull(l).getLatitude();
+            double lon = Objects.requireNonNull(l).getLongitude();
+
+            alertText += " There is a medically-afflicted victim located at (" + lat + ", " + lon + "). The victim is ";
+
+            CheckBox boxIsConscious = findViewById(R.id.boxIsConscious);
+            CheckBox boxIsBleeding = findViewById(R.id.boxIsBleeding);
+            CheckBox boxHasPulse = findViewById(R.id.boxHasPulse);
+            CheckBox boxIsCold = findViewById(R.id.boxIsCold);
+            CheckBox boxIsDecapitated = findViewById(R.id.boxIsDecapitated);
+
+            if (boxIsConscious.isChecked()) {
+                alertText += "conscious, ";
+            } else {
+                alertText += "not conscious, ";
+            }
+
+            if (boxIsBleeding.isChecked()) {
+                alertText += "bleeding, ";
+            } else {
+                alertText += "not bleeding, ";
+            }
+
+            if (boxHasPulse.isChecked()) {
+                alertText += "has a pulse, ";
+            } else {
+                alertText += "has no pulse, ";
+            }
+
+            if (boxIsCold.isChecked()) {
+                alertText += "is cold to the touch, ";
+            } else {
+                alertText += "is a normal temperature, ";
+            }
+
+            if (boxIsDecapitated.isChecked()) {
+                alertText += "has lost their head, ";
+            } else {
+                alertText += "still has their head on, ";
+            }
+
+            alertText += "and was reported at " + DateFormat.getDateTimeInstance().format(new Date()) + ".";
+
+            Log.d("sms", alertText);
+
+            // the Intent is to provide survivors with a sense of pride and accomplishment
+            startActivity(new Intent(getApplicationContext(), Act_GIF.class)); // TODO: alert operators of conditions
         });
     }
 
