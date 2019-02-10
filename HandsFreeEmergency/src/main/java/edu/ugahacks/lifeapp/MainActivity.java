@@ -27,10 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Error";
     private FusedLocationProviderClient flpc;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    SmsManager manager;
     TextToSpeech tts;
-    String phone;
-    String txtMessage;
     public static Location l;
 
     /**
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(getApplicationContext(), "Location denied; exiting application.", Toast.LENGTH_SHORT).show();
+            tts.speak("Is this an Emergency or Do you need to provide FirstAid? ",TextToSpeech.QUEUE_FLUSH,null,null);
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
         }
@@ -51,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-           tts.speak("Is this an Emergency or Do you need to provide FirstAid? ",TextToSpeech.QUEUE_FLUSH,null,null);
+
         } else {
             flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+
             final Task t = flpc.getLastLocation();
             t.addOnSuccessListener(this, o -> {
                 // *should* be a Location.
@@ -70,25 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Checklist.class)));
 
-    }
-
-    protected void smsText() {
-        phone = "4703518052";
-
-        Intent messageIntent = new Intent(Intent.ACTION_SENDTO);
-        messageIntent.setData(Uri.parse(phone));
-        messageIntent.putExtra("Message", txtMessage);
-        Log.i("Output is : ", txtMessage);
-        if(messageIntent.resolveActivity(getPackageManager()) != null){
-            //  startActivity(messageIntent);
-            manager.sendTextMessage(phone,null,txtMessage, null,null);
-
-            Log.i("Is there a message?  ", txtMessage);
-        }else{
-            Log.d(TAG,"No message");
-        }
 
     }
+
 
 
 
