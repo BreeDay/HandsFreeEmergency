@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,14 +15,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 
-
 import edu.ugahacks.lifeapp.activities.Act_Checklist;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Error";
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    TextToSpeech tts;
+    //    TextToSpeech tts;
     public static Location l;
 
     /**
@@ -32,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-            Toast.makeText(getApplicationContext(), "Location denied; exiting application.", Toast.LENGTH_SHORT).show();
-            tts.speak("Is this an Emergency or Do you need to provide FirstAid? ", TextToSpeech.QUEUE_FLUSH, null, null);
+            Toast.makeText(getApplicationContext(), "Permission(s) denied; exiting application.", Toast.LENGTH_SHORT).show();
+//            tts.speak("Is this an Emergency or Do you need to provide FirstAid? ", TextToSpeech.QUEUE_FLUSH, null, null);
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
         }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 98);
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

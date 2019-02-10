@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,8 +36,9 @@ public class Act_Text911 extends AppCompatActivity {
     TextToSpeech tts;
     String phone;
     String txtMessage;
-    SmsManager manager;
+    SmsManager manager = SmsManager.getDefault();
     PendingIntent pi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +46,11 @@ public class Act_Text911 extends AppCompatActivity {
         setContentView(R.layout.texting911);
         setTitle("SMS Confirmation");
 
-        tts = new TextToSpeech(this, i -> {
-            if (i != TextToSpeech.ERROR) {
-                tts.setLanguage(Locale.US);
-            }
-        });
-        tts.speak(getTitle().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
-
         ApplicationInfo ai = getApplicationContext().getApplicationInfo();
         String appName = ai.labelRes == 0 ? ai.nonLocalizedLabel.toString() : getApplicationContext().getString(ai.labelRes);
         String alertText = "[TEST ALERT. NO NEED TO RESPOND.] This is an automated alert message from " + appName + ".";
-        tts.speak(alertText, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        // get the location information.
         Location l = MainActivity.l;
         if (l == null) {
             SystemClock.sleep(5000);
@@ -64,9 +60,7 @@ public class Act_Text911 extends AppCompatActivity {
         }
         double lat = Objects.requireNonNull(l).getLatitude();
         double lon = Objects.requireNonNull(l).getLongitude();
-
         String pos = "";
-
         try {
             Geocoder geo = new Geocoder(getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geo.getFromLocation(lat, lon, 1);
@@ -80,14 +74,15 @@ public class Act_Text911 extends AppCompatActivity {
             pos = "(" + lat + "," + lon + ")";
         }
 
-        tts.speak("Select Ailment", TextToSpeech.QUEUE_FLUSH, null, null);
-        alertText += " There is a medically-afflicted victim located at " + pos + ". The victim is ";
-
-        alertText += Act_Checklist.symptoms;
-
-        alertText += "and was reported at " + DateFormat.getDateTimeInstance().format(new Date()) + ".";
-
+        alertText += " There is a medically-afflicted victim located at "
+                + pos
+                + ". The victim is "
+                + Act_Checklist.symptoms
+                + "and was reported at "
+                + DateFormat.getDateTimeInstance().format(new Date())
+                + ".";
         Log.d("sms", alertText);
+//        tts.speak(alertText, TextToSpeech.QUEUE_FLUSH, null, null);
         // TODO: send SMS to 911 via external method, direct user to instructional GIFs.
 
         // TODO: deprecate using the notification, maybe?
@@ -103,7 +98,19 @@ public class Act_Text911 extends AppCompatActivity {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(alertText))
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_light_normal_background)
                 .setContentTitle("Successful SMS sent by HandsFreeEmergency!");
-        tts.speak("Message has been sent", TextToSpeech.QUEUE_FLUSH, null, null);
+
+        tts = new TextToSpeech(getApplicationContext(), status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = tts.setLanguage(Locale.US);
+                if (result == TextToSpeech.LANG_MISSING_DATA ||
+                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e("error", "This language is not supported.");
+                } else {
+                    tts.speak("Message has been sent", TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+            } else
+                Log.e("error", "Initialization failed!");
+        });
 
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.createNotificationChannel(mChannel);
@@ -113,19 +120,28 @@ public class Act_Text911 extends AppCompatActivity {
         phone = "4703518052";
         txtMessage = "Testing";
 
+        ArrayList<String> parts = manager.divideMessage(alertText);
+        ArrayList<PendingIntent> sendList = new ArrayList<>();
+        sendList.add(PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_SENT"), 0));
+        ArrayList<PendingIntent> deliverList = new ArrayList<>();
+        deliverList.add(PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_DELIVERED"), 0));
+
         Intent messageIntent = new Intent(Intent.ACTION_SENDTO);
         messageIntent.setData(Uri.parse(phone));
         messageIntent.putExtra("Message", alertText);
         pi = PendingIntent.getBroadcast(this, 0, new Intent(alertText), 0);
-        Log.i("Output is : ", alertText);
-        if (messageIntent.resolveActivity(getPackageManager()) != null) {
-            manager = SmsManager.getDefault();
-            manager.sendTextMessage(phone, null, alertText, pi, null);
-
-            Log.i("Is there a message?  ", alertText);
-        } else {
-            Log.i(TAG, "No message");
-        }
-
+        Log.i("Output is: ", alertText);
+        manager.sendMultipartTextMessage(phone, null, parts, sendList, deliverList);
+        Log.i("Sending message...", alertText);
     }
+
+    @Override
+    protected void onPause() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onPause();
+    }
+
 }
