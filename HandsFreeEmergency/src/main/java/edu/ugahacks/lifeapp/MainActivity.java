@@ -18,8 +18,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 
-import java.util.Locale;
-
 import edu.ugahacks.lifeapp.activities.Act_Checklist;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-           tts.speak("Is this an Emergency or Do you need to provide FirstAid? ",TextToSpeech.QUEUE_FLUSH,null,null);
+            tts.speak("Is this an Emergency or Do you need to provide FirstAid? ", TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
             flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
             final Task t = flpc.getLastLocation();
@@ -69,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Checklist.class)));
+        findViewById(R.id.firstAid).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.webmd.com/first-aid/first-aid-a-to-z"))));
 
     }
 
@@ -79,20 +78,19 @@ public class MainActivity extends AppCompatActivity {
         messageIntent.setData(Uri.parse(phone));
         messageIntent.putExtra("Message", txtMessage);
         Log.i("Output is : ", txtMessage);
-        if(messageIntent.resolveActivity(getPackageManager()) != null){
+        if (messageIntent.resolveActivity(getPackageManager()) != null) {
             //  startActivity(messageIntent);
-            manager.sendTextMessage(phone,null,txtMessage, null,null);
+            manager.sendTextMessage(phone, null, txtMessage, null, null);
 
             Log.i("Is there a message?  ", txtMessage);
-        }else{
-            Log.d(TAG,"No message");
+        } else {
+            Log.d(TAG, "No message");
         }
 
     }
 
 
-
-    }
+}
 
 
 

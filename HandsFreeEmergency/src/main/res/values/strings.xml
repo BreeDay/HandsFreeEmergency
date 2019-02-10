@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UGAHacks4</string>
-    <string name="title_activity_second">SecondActivity</string>
-    <string name="title_activity_act_911">Act_911</string>
+    <string name="app_name">Hands-Free Emergency</string>
+    <string name="title_activity_second">Victim\'s Symptoms</string>
+    <string name="title_activity_act_911">Texting 911</string>
 </resources>
