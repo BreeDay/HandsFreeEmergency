@@ -3,6 +3,7 @@ package edu.ugahacks.lifeapp.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import edu.ugahacks.lifeapp.MainActivity;
 import edu.ugahacks.lifeapp.R;
 
 public class Act_Text911 extends AppCompatActivity {
@@ -12,5 +13,7 @@ public class Act_Text911 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.texting911);
         setTitle("SMS Confirmation");
+        MainActivity m = new MainActivity();
+
     }
 }
