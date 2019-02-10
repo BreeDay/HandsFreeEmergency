@@ -31,7 +31,7 @@ public class Act_Verify extends AppCompatActivity {
         b.setOnClickListener(e -> {
             EditText et = findViewById(R.id.enterCode);
             if (Integer.parseInt(et.getText().toString()) == code) {
-                startActivity(new Intent(getApplicationContext(), Act_Text911.class));
+                startActivity(new Intent(getApplicationContext(), Act_Checklist.class));
             } else {
                 et.setText("");
                 Toast.makeText(getApplicationContext(), "Incorrect code. Try again.", Toast.LENGTH_LONG).show();

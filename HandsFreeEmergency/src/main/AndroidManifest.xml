@@ -19,6 +19,22 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".medmain"
+            android:label="@string/title_activity_medmain"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".seeksafe"
+            android:label="@string/title_activity_seeksafe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".safeprompt"
+            android:label="@string/title_activity_safeprompt"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".call911menu"
+            android:label="@string/title_activity_call911menu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activities.Act_Verify"
             android:label="@string/title_activity_act__verify"
             android:parentActivityName=".activities.Act_Checklist">

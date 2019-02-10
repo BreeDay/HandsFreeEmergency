@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import java.util.Locale;
 
 import edu.ugahacks.lifeapp.R;
+import edu.ugahacks.lifeapp.call911menu;
 
 public class Act_Checklist extends AppCompatActivity {
 
@@ -78,7 +79,7 @@ public class Act_Checklist extends AppCompatActivity {
             symptoms += "still has their head on, ";
         }
 
-        findViewById(R.id.checklistSubmit).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Verify.class)));
+        findViewById(R.id.checklistSubmit).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), call911menu.class)));
     }
 
 }

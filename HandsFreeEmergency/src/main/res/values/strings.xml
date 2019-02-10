@@ -15,4 +15,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_call911menu">call911menu</string>
+    <string name="title_activity_safeprompt">safeprompt</string>
+    <string name="title_activity_seeksafe">seeksafe</string>
+    <string name="title_activity_medmain">medmain</string>
 </resources>

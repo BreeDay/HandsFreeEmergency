@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import java.util.Locale;
 
 import edu.ugahacks.lifeapp.activities.Act_Checklist;
+import edu.ugahacks.lifeapp.activities.Act_Verify;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
 
-        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), call911menu.class)));
+        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Verify.class)));
         findViewById(R.id.firstAid).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), safeprompt.class)));
 
     }
