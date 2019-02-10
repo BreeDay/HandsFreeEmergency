@@ -2,8 +2,11 @@ package edu.ugahacks.lifeapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
+
+import java.util.Locale;
 
 import edu.ugahacks.lifeapp.R;
 
@@ -13,6 +16,7 @@ public class Act_Checklist extends AppCompatActivity {
 
     // CRUCIAL: define null to be 0
     public final static int NULL = 0;
+    TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,18 @@ public class Act_Checklist extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checklist);
+
+        tts = new TextToSpeech(getApplicationContext(), i -> {
+            if(i != TextToSpeech.ERROR){
+                tts.setLanguage(Locale.US);
+                //tts.setPitch(3);
+                tts.setSpeechRate(-1);
+                tts.speak("What is the victim's condition?" +
+                        "Does the victim have a pulse? " +
+                        "Is the victim  conscious, bleeding, cold or Decapitated", TextToSpeech.QUEUE_FLUSH, null, null);
+
+            }
+        });
 
         CheckBox boxIsConscious = findViewById(R.id.boxIsConscious);
         CheckBox boxIsBleeding = findViewById(R.id.boxIsBleeding);

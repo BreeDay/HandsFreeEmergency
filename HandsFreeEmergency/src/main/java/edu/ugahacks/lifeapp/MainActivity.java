@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +16,15 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Locale;
+
 import edu.ugahacks.lifeapp.activities.Act_Checklist;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Error";
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    //    TextToSpeech tts;
+    TextToSpeech tts;
     public static Location l;
 
     /**
@@ -43,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Hands-Free Emergency");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        tts = new TextToSpeech(getApplicationContext(), i -> {
+            if(i != TextToSpeech.ERROR){
+                tts.setLanguage(Locale.US);
+                tts.speak("What is the nature of your Request?" +
+                        "Is it an Emergency?" +
+                        "Or do you need immediate First Aid?", TextToSpeech.QUEUE_FLUSH, null, null);
+
+            }
+        });
+
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 98);
