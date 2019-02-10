@@ -15,9 +15,8 @@ public class Act_GIF extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gif);
 
-        // TODO: insert relevant GIFs here instead of cats.
+        // TODO: insert relevant GIFs here instead of cats. Unfortunately.
         ImageView i = findViewById(R.id.anim_1);
         Glide.with(getApplicationContext()).load("https://media.giphy.com/media/OmK8lulOMQ9XO/giphy.gif").into(i);
-
     }
 }

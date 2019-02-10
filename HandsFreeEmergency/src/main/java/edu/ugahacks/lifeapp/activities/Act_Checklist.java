@@ -14,6 +14,9 @@ public class Act_Checklist extends AppCompatActivity {
     // CRUCIAL: define null to be 0
     public final static int NULL = 0;
 
+    // ESSENTIAL: define 0 to be null
+    public final static String ZERO = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("What are the victim's conditions?");
