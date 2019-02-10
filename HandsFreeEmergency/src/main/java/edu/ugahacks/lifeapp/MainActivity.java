@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Obtaining your location...", Toast.LENGTH_LONG).show();
         }
 
-        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Act_Checklist.class)));
-        findViewById(R.id.firstAid).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.webmd.com/first-aid/first-aid-a-to-z"))));
+        findViewById(R.id.call911).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), call911menu.class)));
+        findViewById(R.id.firstAid).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), safeprompt.class)));
 
     }
 }
