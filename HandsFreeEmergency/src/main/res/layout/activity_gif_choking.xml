@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gifs.gif_choking">
+
+    <ImageView
+        android:id="@+id/gif_choking"
+        android:layout_width="338dp"
+        android:layout_height="242dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Get the person to stand up. Position yourself behind the person. Lean the person forward and give five blows to their back with the heel of your hand. Place your arms around their waist. Make a fist and place it just above the navel, thumb side in. Grab the fist with your other hand and push it inward and upward at the same time. Perform five of these abdominal thrusts. Repeat until the object is expelled and the person can breathe or cough on their own."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gif_choking"
+        app:layout_constraintVertical_bias="0.244" />
+</android.support.constraint.ConstraintLayout>

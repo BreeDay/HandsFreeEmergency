@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Act_GIF">
+    tools:context=".gifs.gif_seizure">
 
     <ImageView
-        android:id="@+id/anim_1"
+        android:id="@+id/gif_seizure"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="381dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="277dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="8dp"
+        android:text="Keep other people out of the way. Clear hard or sharp objects away from the person. Don't try to hold the person down or stop the movements. Place them on their side, to help keep their airway clear. Look at your watch at the start of the seizure, to time its length. Don't put anything in their mouth."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gif_seizure" />
 </android.support.constraint.ConstraintLayout>

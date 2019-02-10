@@ -18,10 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".gifs.gif_choking"></activity>
+        <activity android:name=".gifs.gif_bleed" />
+        <activity android:name=".gifs.gif_unconscious" />
         <activity
             android:name=".medmain"
             android:label="@string/title_activity_medmain"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".seeksafe"
             android:label="@string/title_activity_seeksafe"
@@ -42,7 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ugahacks.lifeapp.activities.Act_Checklist" />
         </activity>
-        <activity android:name=".activities.Act_GIF" />
+        <activity android:name=".gifs.gif_seizure" />
         <activity android:name=".activities.Act_Text911" />
         <activity
             android:name=".activities.Act_Checklist"
