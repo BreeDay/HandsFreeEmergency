@@ -2,26 +2,38 @@ package edu.ugahacks.lifeapp.activities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.Telephony;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import edu.ugahacks.lifeapp.MainActivity;
 import edu.ugahacks.lifeapp.R;
 
 public class Act_Checklist extends AppCompatActivity {
+    private static final String TAG = "MESSAGE" ;
+    TextToSpeech tts;
+    String phone;
+    String txtMessage;
+    SmsManager manager;
+    PendingIntent pi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +41,33 @@ public class Act_Checklist extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checklist);
+        tts=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.US);
+                }
+            }
+        });
+        tts.speak(getTitle().toString(),TextToSpeech.QUEUE_FLUSH,null,null);
 
         findViewById(R.id.checklistSubmit).setOnClickListener(v -> {
             ApplicationInfo ai = getApplicationContext().getApplicationInfo();
             String appName = ai.labelRes == 0 ? ai.nonLocalizedLabel.toString() : getApplicationContext().getString(ai.labelRes);
             String alertText = "This is an automated alert message from " + appName + ".";
-
+            tts.speak(alertText,TextToSpeech.QUEUE_FLUSH,null,null);
             Location l = MainActivity.l;
             if (l == null) {
                 SystemClock.sleep(5000);
                 Toast.makeText(getApplicationContext(), "Still obtaining location. Please wait a moment.", Toast.LENGTH_LONG).show();
+                tts.speak("obtaining Location",TextToSpeech.QUEUE_FLUSH,null,null);
                 return;
             }
             double lat = Objects.requireNonNull(l).getLatitude();
             double lon = Objects.requireNonNull(l).getLongitude();
 
             alertText += " There is a medically-afflicted victim located at (" + lat + ", " + lon + "). The victim is ";
+            tts.speak("Select Ailment",TextToSpeech.QUEUE_FLUSH,null,null);
 
             CheckBox boxIsConscious = findViewById(R.id.boxIsConscious);
             CheckBox boxIsBleeding = findViewById(R.id.boxIsBleeding);
@@ -100,16 +123,35 @@ public class Act_Checklist extends AppCompatActivity {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(alertText))
                     .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                     .setContentTitle("Successful SMS sent by HandsFreeEmergency!");
+            tts.speak("Message has been sent",TextToSpeech.QUEUE_FLUSH,null,null);
 
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.createNotificationChannel(mChannel);
             // notificationID allows you to update the notification later on.
             mNotificationManager.notify(3908, mBuilder.build());
 
+            phone = "4703518052";
+            txtMessage = "Testing";
+
+            Intent messageIntent = new Intent(Intent.ACTION_SENDTO);
+            messageIntent.setData(Uri.parse(phone));
+            messageIntent.putExtra("Message", alertText);
+            pi = PendingIntent.getBroadcast(this,0,new Intent(alertText),0);
+            Log.i("Output is : ", alertText);
+            if(messageIntent.resolveActivity(getPackageManager()) != null){
+                //  startActivity(messageIntent);
+                manager.sendTextMessage(phone,null,alertText, pi,null);
+
+                Log.i("Is there a message?  ", alertText);
+            }else{
+                Log.i(TAG,"No message");
+            }
+
             // TODO: not this.
             // the Intent is to provide survivors with a sense of pride and accomplishment #EAGames #ItsInYourBloodstream
             startActivity(new Intent(getApplicationContext(), Act_Text911.class));
         });
+
     }
 
 }
