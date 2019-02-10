@@ -22,7 +22,6 @@ import edu.ugahacks.lifeapp.activities.Act_Checklist;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Error";
-    private FusedLocationProviderClient flpc;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     TextToSpeech tts;
     public static Location l;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
         } else {
-            flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+            FusedLocationProviderClient flpc = LocationServices.getFusedLocationProviderClient(getApplicationContext());
 
             final Task t = flpc.getLastLocation();
             t.addOnSuccessListener(this, o -> {
