@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         tts = new TextToSpeech(getApplicationContext(), i -> {
             if(i != TextToSpeech.ERROR){
                 tts.setLanguage(Locale.US);
+                tts.setSpeechRate(-1);
                 tts.speak("What is the nature of your Request?" +
                         "Is it an Emergency?" +
                         "Or do you need immediate First Aid?", TextToSpeech.QUEUE_FLUSH, null, null);
